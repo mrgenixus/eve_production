@@ -1,0 +1,23 @@
+<%= form_for(@blueprint) do |f| %>
+  <% if @blueprint.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@blueprint.errors.count, "error") %> prohibited this blueprint from being saved:</h2>
+
+      <ul>
+      <% @blueprint.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= f.label :name %><br>
+  <%= f.text_field :name %><br>
+
+  <%= f.label :worth %>
+  <%= f.text_field :worth %>
+
+  <div class="actions">
+    <%= f.submit (params[:action].to_sym == :new ? "Create" : "Save") + " Blueprint" %>
+  </div>
+<% end %>

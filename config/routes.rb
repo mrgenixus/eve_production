@@ -14,6 +14,7 @@ Production::Application.routes.draw do
   #   resources :products
 
   resources :products
+  resources :blueprints
 
   # Sample resource route with options:
   #   resources :products do

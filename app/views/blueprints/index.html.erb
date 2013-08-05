@@ -1,0 +1,24 @@
+<h1>Listing blueprints</h1>
+
+<table>
+  <caption>Blueprints</caption>
+  <tr>
+    <th>Name</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @blueprints.each do |blueprint| %>
+  <tr>
+    <td><%= blueprint.name if blueprint.name %></td>
+    <td><%= link_to 'Show', blueprint %></td>
+    <td><%= link_to 'Edit', edit_blueprint_path(blueprint) %></td>
+    <td><%= link_to 'Destroy', blueprint, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Blueprint', new_blueprint_path %>
