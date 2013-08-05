@@ -32,6 +32,8 @@ group :test do
 	gem "guard-bundler"
 	gem "database_cleaner"
   gem 'forgery'
+  gem 'factory_girl'
+  gem 'factory_girl_rails'
 end
 
 gem 'enum_simulator'

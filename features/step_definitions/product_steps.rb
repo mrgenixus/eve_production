@@ -1,6 +1,10 @@
 Given(/^I visit the Add Product Component page$/) do
 	visit new_product_path
 end
+Given(/^I visit the Edit Product Component page$/) do
+  @product = FactoryGirl.create(:product)
+  visit edit_product_path(@product)
+end
 
 Then(/^I should see the heading "(.+)"$/) do | heading |
   page.within 'h1' do
@@ -48,6 +52,10 @@ Then(/^the product will show "(.*?)" in the "(.*?)" column$/) do |value, column_
   	page.all("tr")[product_row].all("td")[source_column].text.should eq value
     
   end
+end
+
+When(/^I enter a value for the product$/) do
+  page.fill_in :worth, :with => Forgery(:monetary).money(:at_least => 1, :at_most => 14)
 end
 
 When(/^I select a source$/) do

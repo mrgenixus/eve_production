@@ -17,8 +17,10 @@
   <%= f.label :source %><br>
   <%= f.select :source, Product.enumerated_attributes[:source].map { |k, v| [ v, k ] }, {:include_blank => 'Select a Product Source'} %>
 
+  <%= f.label :worth %>
+  <%= f.text_field :worth %>
 
   <div class="actions">
-    <%= f.submit "Create Product" %>
+    <%= f.submit (params[:action].to_sym == :new ? "Create" : "Save") + " Product" %>
   </div>
 <% end %>
