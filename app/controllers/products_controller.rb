@@ -11,13 +11,26 @@ class ProductsController < ApplicationController
   end
 
   def create
+  	@product = Product.new(params[:product])
 
-  	redirect_to products_path
+    if @product.save
+    	redirect_to products_path, :flash => { :notice => "Product Created" }
+    else
+      error_fields = @product.errors.keys.join(", ")
+      msg = 'Invalid Product'
+      msg += " (#{error_fields})" unless error_fields.blank?
+      flash[:error] = msg
+      render :new
+    end
 
   end
 
   def index
-  	@products = Product.order(:name);
+  	@products = Product.order(:name)
 
+    respond_to do |format|
+      format.html #index.html.erb
+      format.json { render json: @products}
+    end
   end
 end

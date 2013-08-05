@@ -11,7 +11,14 @@
     </div>
   <% end %>
 
+  <%= f.label :name %><br>
+  <%= f.text_field :name %><br>
+
+  <%= f.label :source %><br>
+  <%= f.select :source, Product.enumerated_attributes[:source].map { |k, v| [ v, k ] }, {:include_blank => 'Select a Product Source'} %>
+
+
   <div class="actions">
-    <%= f.submit "Create Product Component" %>
+    <%= f.submit "Create Product" %>
   </div>
 <% end %>

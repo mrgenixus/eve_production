@@ -34,6 +34,7 @@ group :test do
   gem 'forgery'
 end
 
+gem 'enum_simulator'
 
 
 gem 'jquery-rails'

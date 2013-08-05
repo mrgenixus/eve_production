@@ -10,7 +10,7 @@ Feature: A Product Component has a name and a source.
 	-    Planet Tier 3
 	-    Planet Tier 4
 	-    Asteroid Unrefined
-	-    Astroid Refined
+	-    Asteroid Refined
 	-    Gas Tier 1
 	-    Gas Refined
 	-    Blueprint
@@ -27,18 +27,6 @@ Feature: A Product Component has a name and a source.
 	Scenario: The submit button should be correctly labled
 		Then The submit button should be labeled "Create Product"
 
-	Scenario: A User doesn't enter a name
-		When The submit button should be labeled "Create Product"
-		When I click "Create Product"
-		Then A notice that reads "Invalid Product (name)" is displayed
-
-	Scenario: A User doesn't select a name
-		When I enter a name
-		When I click "Create Product"
-		Then A notice that reads "Product Created" is displayed
-		Then A list of "Products" will be displayed in a table
-		Then the product will show "Astroid Refined" in the "Source" column
-
 	Scenario: A User enters valid product information
 		When I enter a name
 		When I select a source
@@ -46,3 +34,15 @@ Feature: A Product Component has a name and a source.
 		Then A notice that reads "Product Created" is displayed
 		Then A list of "Products" will be displayed in a table
 		Then the product will show the enterred source in the "Source" column
+
+	Scenario: A User doesn't enter a name
+		When The submit button should be labeled "Create Product"
+		When I click "Create Product"
+		Then An error that reads "Invalid Product (name)" is displayed
+
+	Scenario: A User doesn't select a source
+		When I enter a name
+		When I click "Create Product"
+		Then A notice that reads "Product Created" is displayed
+		Then A list of "Products" will be displayed in a table
+		Then the product will show "Asteroid Refined" in the "Source" column
