@@ -24,7 +24,16 @@ group :test do
   gem "capybara", "~> 1"
   gem "cucumber", "~> 1"
   gem "cucumber-rails", "~> 0.3"
+  gem "rspec"
+	gem "guard"
+	gem "guard-rspec"
+	gem "guard-rails"
+	gem "guard-cucumber"
+	gem "guard-bundler"
+	gem "database_cleaner"
+  gem 'forgery'
 end
+
 
 
 gem 'jquery-rails'
