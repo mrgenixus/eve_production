@@ -36,6 +36,10 @@ group :test do
   gem 'factory_girl_rails'
 end
 
+group :development do
+  gem "better_errors"
+end
+
 gem 'enum_simulator'
 
 
