@@ -1,0 +1,2 @@
+class Component < Product
+end

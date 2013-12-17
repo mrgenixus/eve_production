@@ -1,5 +1,4 @@
 class Product < ActiveRecord::Base
-  attr_accessible :name, :source, :worth
   SOURCE_TYPES = {
   	:moon_1 => "Moon Tier 1",
   	:moon_2 => "Moon Tier 2",

@@ -1,0 +1,20 @@
+<h1>Editing blueprint</h1>
+
+<%= render 'form' %>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Qty</th>
+  </tr>
+<% @components.each do |c| %>
+  <tr>
+    <td><%= c[:name] %></td>
+    <td><%= c[:quantity] %></td>
+  </tr>
+<% end %>
+</table>
+
+<%= link_to 'Add Component', new_blueprint_component_path(:blueprint_id => @blueprint.id) %>
+<%= link_to 'Show', @blueprint %> |
+<%= link_to 'Back', blueprints_path %>

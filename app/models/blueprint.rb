@@ -1,5 +1,6 @@
 class Blueprint < Product
-  attr_accessible :name, :worth
+  has_many :blueprints_components
+  has_many :components, through: :blueprints_components
 
   def set_default_source
   	self.source = :blueprint

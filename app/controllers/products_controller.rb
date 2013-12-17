@@ -36,7 +36,7 @@ class ProductsController < ApplicationController
   def update
     @product = Product.find(params[:id])
 
-    if @product.save(params[:product])
+    if @product.update_attributes(params[:product])
       redirect_to products_path, :flash => { :notice => "Product Saved" }
     else
       error_fields = error_fields = @product.errors.keys.join(", ")

@@ -1,8 +1,13 @@
-Given(/^I visit the Add Product Component page$/) do
+Given(/^I visit the Add Product page$/) do
 	visit new_product_path
 end
-Given(/^I visit the Edit Product Component page$/) do
-  @product = FactoryGirl.create(:product)
+Given(/^I visit the Edit Product page$/) do
+  @product ||= FactoryGirl.create(:product)
+  visit edit_product_path(@product)
+end
+
+When(/^I visit the Edit Product Page$/) do
+  @product ||= FactoryGirl.create(:product)
   visit edit_product_path(@product)
 end
 
@@ -85,6 +90,12 @@ When(/^I select a source$/) do
 	@selected_options ||= {}
 	@selected_options[:source] = "Asteroid Unrefined"
 	page.select @selected_options[:source], :from => :source
+end
+
+When(/^I select "(.*?)" as "(.*?)"$/) do |option, field|
+  @selected_options ||= {}
+  @selected_options[field.downcase.singularize.to_sym] = option
+  page.select option , :from => field
 end
 
 Then(/^the product will show the enterred source in the "(.*?)" column$/) do |column_label|

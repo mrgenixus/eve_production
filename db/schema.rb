@@ -11,7 +11,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130805175752) do
+ActiveRecord::Schema.define(:version => 20131217050135) do
+
+  create_table "blueprints_components", :id => false, :force => true do |t|
+    t.integer "blueprint_id"
+    t.integer "component_id"
+    t.integer "quantity"
+  end
 
   create_table "products", :force => true do |t|
     t.string   "name"

@@ -19,7 +19,7 @@ Feature: A Product Component has a name and a source.
 	If a User doesn't select a name, the Component should be an Asteroid Refined sourced item.
 
 	Background: 
-		Given I visit the Add Product Component page
+		Given I visit the Add Product page
 
 	Scenario: There should be an "Add Product" page
 		Then I should see the heading "Add Product"

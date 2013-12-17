@@ -9,6 +9,22 @@ class BlueprintsController < ApplicationController
     end
   end
 
+  def edit
+    @blueprint = Blueprint.find(params[:id])
+
+    
+
+    @components = @blueprint.blueprints_components.group_by(&:component_id)
+    @components = @components.map do |id, components| 
+      { name: components.first.component.name, quantity: components.reduce(0) { |p,c| p + c.quantity } }
+    end
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @blueprint }
+    end
+  end
+
   def create
   	@blueprint = Blueprint.new(params[:blueprint])
 
