@@ -25,3 +25,6 @@
         %td= number_to_currency produceable_component.cost, precision: 2
         %td= number_to_currency produceable_component.value, precision: 2
         %td= link_to 'Delete', produceable_component_path(produceable_component.id), method: :delete
+  %tr
+    %td{colspan: 4}
+    %td= number_to_currency produceable.cost

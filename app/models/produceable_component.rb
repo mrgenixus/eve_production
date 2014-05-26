@@ -3,9 +3,9 @@ class ProduceableComponent < ActiveRecord::Base
   belongs_to :component, foreign_key: :component_id, class_name: "Produceable"
 
   def cost
-    cost = component.cost
+    cost = component.try(:cost)
     if cost == 0
-      cost = component.value
+      cost = component.try(:value)
     end
 
     (qty || 1) * (cost || 0)
