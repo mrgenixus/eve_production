@@ -17,15 +17,19 @@
       %tr
       %td
         %td= link_to produceable.name, produceable_path(produceable)
-        %td= number_to_currency produceable.value
+        %td
+          = link_to edit_produceable_path(produceable) do
+            = number_to_currency produceable.value
         %td
           - if produceable.cost == 0
             N/A
           - else
-            = number_to_currency produceable.cost
+            = link_to produceable do
+              = number_to_currency produceable.cost
         %td
           - if produceable.has_components?
-            = produceable.produceable_components.count
+            = link_to produceable do
+              = produceable.produceable_components.count
           - else
             N/A
         %td
@@ -38,17 +42,19 @@
       %tr
       %td
         %td= link_to produceable.name, produceable_path(produceable)
-        %td= number_to_currency produceable.value
+        %td
+          = link_to edit_produceable_path(produceable) do
+            = number_to_currency produceable.value
         %td
           - if produceable.cost == 0
-            N/A
+
           - else
             = number_to_currency produceable.cost
         %td
           - if produceable.has_components?
             = produceable.produceable_components.count
           - else
-            N/A
+
         %td
           = link_to "Delete", produceable_path(produceable), method: :delete
   %tr

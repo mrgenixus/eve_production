@@ -8,6 +8,6 @@
     %th Number of Items
   - @build_plans.each do |build_plan|
     %tr
-      %td= link_to build_plan.created_at, edit_build_plan_path(build_plan)
-      %td= build_plan.cost
-      %td= build_plan.planned_items.count
+      %td= link_to build_plan.created_at, build_plan
+      %td= number_to_currency build_plan.cost
+      %td= build_plan.planned_items.map(&:qty).reduce(0, &:+)

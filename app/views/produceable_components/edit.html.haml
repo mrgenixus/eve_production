@@ -1,0 +1,9 @@
+= form_for @produceable_component do |f|
+  .product
+    = f.label :product
+    = f.select :component_id, Produceable.all.map { |produceable| [ produceable.name, produceable.id] }, selected: f.object.component_id
+  .qty
+    = f.label :qty
+    = f.number_field :qty
+  .submit
+    = f.submit

@@ -27,10 +27,17 @@
       %tr
         %td= link_to planned_item.qty, edit_planned_item_path(planned_item)
         %td= link_to planned_item.product.name, edit_produceable_path(planned_item.product)
-        %td= number_to_currency planned_item.product.cost
-        %td= number_to_currency planned_item.product.value
+        %td
+          = link_to planned_item.product do
+            = number_to_currency planned_item.product.cost
+
+        %td
+          = link_to edit_produceable_path(planned_item.product) do
+            = number_to_currency planned_item.product.value
+
         %td= number_to_currency planned_item.cost
         %td= number_to_currency planned_item.value
+
         %td= link_to 'Delete', planned_item_path(planned_item), method: :delete
 
 = form_for [build_plan, build_plan.plan_inventory_items.build] do |f|
@@ -60,10 +67,18 @@
       %tr
         %td= plan_inventory_item.qty
         %td= link_to plan_inventory_item.component.name, edit_produceable_path(plan_inventory_item.component)
-        %td= number_to_currency plan_inventory_item.component.cost
-        %td= number_to_currency plan_inventory_item.component.value
+
+        %td
+          =link_to plan_inventory_item.component do
+            = number_to_currency plan_inventory_item.component.cost
+
+        %td
+          = link_to edit_produceable_path(plan_inventory_item.component) do
+            = number_to_currency plan_inventory_item.component.value
+
         %td= number_to_currency plan_inventory_item.cost
         %td= number_to_currency plan_inventory_item.value
+
         %td= link_to 'Delete', plan_inventory_item_path(plan_inventory_item), method: :delete
 
 %h3 Purchase Order
@@ -80,7 +95,10 @@
       %td= orderable.produceable.name
       %td= number_with_delimiter orderable.qty
       %td= number_to_currency orderable.cost
-      %td #{(orderable.produceable.value || orderable.produceable.cost)}ea.
+      %td
+        = link_to edit_produceable_path(orderable.produceable) do
+          #{(orderable.produceable.value || orderable.produceable.cost)}ea.
+
       %td #{number_with_precision (orderable.cost / build_plan.cost) * 100, precision: 2}%
   %tr
     %td{colspan: 2}

@@ -11,6 +11,14 @@ class ProduceableComponentsController < ApplicationController
     redirect_to produceable_path(@produceable_component.product_id)
   end
 
+  def update
+    if @produceable_component.update_attributes produceable_component_update_params
+      redirect_to @produceable_component.product
+    else
+      render :edit, errors: @produceable_component.errors.full_sentences
+    end
+  end
+
   private
 
   def get_produceable_component
@@ -18,7 +26,11 @@ class ProduceableComponentsController < ApplicationController
   end
 
   def produceable_component_params
-    params.require(:produceable_component).permit(:component_id, :qty).merge product_id: params.require(:produceable_id)
+    produceable_component_update_params.merge product_id: params.require(:produceable_id)
+  end
+
+  def produceable_component_update_params
+    params.require(:produceable_component).permit(:component_id, :qty)
   end
 
 end
