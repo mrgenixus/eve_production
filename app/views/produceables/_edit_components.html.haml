@@ -1,0 +1,10 @@
+= form_for [produceable, produceable.produceable_components.build] do |f|
+  %h3 Add Component
+  %span.component
+    = f.label :product
+    = f.select :component_id, Produceable.all.map { |produceable| [ produceable.name, produceable.id] }, {}, autofocus: true
+  %span.qty
+    = f.label :qty
+    = f.number_field :qty
+  %span.submit
+    = f.submit

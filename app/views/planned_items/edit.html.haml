@@ -1,0 +1,9 @@
+= form_for @planned_item do |f|
+  .product
+    = f.label :product
+    = f.select :item_id, Produceable.all.map { |produceable| [ produceable.name, produceable.id] }
+  .qty
+    = f.label :qty
+    = f.number_field :qty
+  .submit
+    = f.submit

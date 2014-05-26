@@ -1,0 +1,13 @@
+%h2
+  = link_to "Produceables", produceables_path
+  Build Plans
+%table
+  %tr
+    %th Creation Date
+    %th Value
+    %th Number of Items
+  - @build_plans.each do |build_plan|
+    %tr
+      %td= link_to build_plan.created_at, edit_build_plan_path(build_plan)
+      %td= build_plan.cost
+      %td= build_plan.planned_items.count

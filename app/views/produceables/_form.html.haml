@@ -1,0 +1,15 @@
+= form_for produceable do |f|
+  .name
+    = f.label :name
+    = f.text_field :name
+
+  .value
+    = f.label :value
+    = f.number_field :value, step: 0.01
+
+  .blueprint_cost
+    = f.label :blueprint_cost
+    = f.number_field :blueprint_cost
+
+  .submit
+    = f.submit

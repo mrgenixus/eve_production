@@ -1,0 +1,6 @@
+%h2= @produceable.name
+= link_to "Edit", edit_produceable_path(@produceable)
+= link_to "Index", produceables_path
+= render 'summary', produceable: @produceable
+= render 'edit_components', produceable: @produceable
+= render 'components', produceable: @produceable

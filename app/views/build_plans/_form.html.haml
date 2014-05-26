@@ -1,0 +1,88 @@
+
+
+= form_for [build_plan, build_plan.planned_items.build] do |f|
+  %h3 Plan Item
+  .product
+    = f.label :product
+    = f.select :item_id, Produceable.all.map { |produceable| [ produceable.name, produceable.id] }
+  .qty
+    = f.label :qty
+    = f.number_field :qty
+  .submit
+    = f.submit
+
+
+%table
+  %tr
+    %th qty
+    %th Name
+    %th Item Cost
+    %th Item Value
+    %th Aggregate Cost
+    %th Aggregate Projected Value
+    %th
+
+  - build_plan.planned_items.each do |planned_item|
+    - if planned_item.product
+      %tr
+        %td= link_to planned_item.qty, edit_planned_item_path(planned_item)
+        %td= link_to planned_item.product.name, edit_produceable_path(planned_item.product)
+        %td= number_to_currency planned_item.product.cost
+        %td= number_to_currency planned_item.product.value
+        %td= number_to_currency planned_item.cost
+        %td= number_to_currency planned_item.value
+        %td= link_to 'Delete', planned_item_path(planned_item), method: :delete
+
+= form_for [build_plan, build_plan.plan_inventory_items.build] do |f|
+  %h3 Plan Inventory Item
+  .product
+    = f.label :product
+    = f.select :item_id, Produceable.all.map { |produceable| [ produceable.name, produceable.id] }
+  .qty
+    = f.label :qty
+    = f.number_field :qty
+  .submit
+    = f.submit
+
+
+%table
+  %tr
+    %th qty
+    %th Name
+    %th Item Cost
+    %th Item Value
+    %th Aggregate Cost
+    %th Aggregate Projected Value
+    %th
+
+  - build_plan.plan_inventory_items.each do |plan_inventory_item|
+    - if plan_inventory_item.component
+      %tr
+        %td= plan_inventory_item.qty
+        %td= link_to plan_inventory_item.component.name, edit_produceable_path(plan_inventory_item.component)
+        %td= number_to_currency plan_inventory_item.component.cost
+        %td= number_to_currency plan_inventory_item.component.value
+        %td= number_to_currency plan_inventory_item.cost
+        %td= number_to_currency plan_inventory_item.value
+        %td= link_to 'Delete', plan_inventory_item_path(plan_inventory_item), method: :delete
+
+%h3 Purchase Order
+%table
+  %tr
+    %th Name
+    %th Qty
+    %th Cost
+    %th Unit Price
+    %th
+
+  - build_plan.purchase_order.each do |orderable|
+    %tr
+      %td= orderable.produceable.name
+      %td= number_with_delimiter orderable.qty
+      %td= number_to_currency orderable.cost
+      %td #{(orderable.produceable.value || orderable.produceable.cost)}ea.
+      %td #{number_with_precision (orderable.cost / build_plan.cost) * 100, precision: 2}%
+  %tr
+    %td{colspan: 2}
+    %td= number_to_currency build_plan.cost
+

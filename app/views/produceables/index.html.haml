@@ -1,0 +1,57 @@
+%h2
+  Produceables
+  = link_to "Build Plans", build_plans_path
+%table
+  %tr
+    %th
+    %th Name
+    %th Value
+    %th Cost
+    %th Number of Component
+    %th
+  %tr
+    %th Products
+
+  - @produceables.each do |produceable|
+    -if produceable.has_components?
+      %tr
+      %td
+        %td= link_to produceable.name, produceable_path(produceable)
+        %td= number_to_currency produceable.value
+        %td
+          - if produceable.cost == 0
+            N/A
+          - else
+            = number_to_currency produceable.cost
+        %td
+          - if produceable.has_components?
+            = produceable.produceable_components.count
+          - else
+            N/A
+        %td
+          = link_to "Delete", produceable_path(produceable), method: :delete
+  %tr
+    %th Components
+
+  - @produceables.each do |produceable|
+    -if ! produceable.has_components?
+      %tr
+      %td
+        %td= link_to produceable.name, produceable_path(produceable)
+        %td= number_to_currency produceable.value
+        %td
+          - if produceable.cost == 0
+            N/A
+          - else
+            = number_to_currency produceable.cost
+        %td
+          - if produceable.has_components?
+            = produceable.produceable_components.count
+          - else
+            N/A
+        %td
+          = link_to "Delete", produceable_path(produceable), method: :delete
+  %tr
+    %td{colspan: 5}= paginate @produceables
+  %tr
+    %td{colspan: 5}= link_to "Add Produceable", new_produceable_path
