@@ -1,7 +1,7 @@
 %h2 Edit Build Plan (#{@build_plan.created_at})
 = link_to 'index', build_plans_path
 %h3 Summary
-%dl
+%dl.dl-horizontal
   %dt Cost
   %dd= number_to_currency @build_plan.cost
 

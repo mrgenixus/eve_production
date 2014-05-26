@@ -11,12 +11,12 @@ class PlanInventoryItem < Item
   end
 
   def cost
-    cost = component.cost
-    if cost == 0
-      cost = component.value
+    cost = component.try(:cost)
+    if cost && cost == 0
+      cost = component.try(:value)
     end
 
-    (qty || 1) * cost
+    (qty || 1) * (cost || 0)
   end
 
   def value

@@ -1,18 +1,19 @@
 %h2 Edit Build Plan (#{@build_plan.created_at})
 = link_to 'index', build_plans_path
 %h3 Summary
-%dl
-  %dt Cost
-  %dd= number_to_currency @build_plan.cost
+%dl.dl-horizontal
+  - if @build_plan.cost > 0
+    %dt Cost
+    %dd= number_to_currency @build_plan.cost
 
-  %dt Value
-  %dd
-    = number_to_currency @build_plan.value
-    (#{number_with_precision ((@build_plan.value) / @build_plan.cost) * 100, precision: 2}%)
+    %dt Value
+    %dd
+      = number_to_currency @build_plan.value
+      (#{number_with_precision ((@build_plan.value) / @build_plan.cost) * 100, precision: 2}%)
 
-  %dt Projected Margin
-  %dd
-    = number_to_currency (@build_plan.value - @build_plan.cost)
-    (#{number_with_precision ((@build_plan.value - @build_plan.cost) / @build_plan.cost) * 100, precision: 2}%)
+    %dt Projected Margin
+    %dd
+      = number_to_currency (@build_plan.value - @build_plan.cost)
+      (#{number_with_precision ((@build_plan.value - @build_plan.cost) / @build_plan.cost) * 100, precision: 2}%)
 
 = render 'form', build_plan: @build_plan

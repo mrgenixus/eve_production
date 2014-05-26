@@ -1,4 +1,4 @@
-%table
+%table.table.table-condensed.table-striped
   %tr
     %th qty
     %th Name
@@ -6,7 +6,7 @@
     %th Item Value
     %th Aggregate Cost
     %th Aggregate Projected Value
-    %th
+    %th.text-right Actions
 
   - produceable.produceable_components.each do |produceable_component|
     - if produceable_component.component
@@ -24,7 +24,14 @@
             = number_to_currency produceable_component.component.value
         %td= number_to_currency produceable_component.cost, precision: 2
         %td= number_to_currency produceable_component.value, precision: 2
-        %td= link_to 'Delete', produceable_component_path(produceable_component.id), method: :delete
+
+        %td.text-right
+          .btn-group
+            - if produceable_component.component.has_components?
+              = link_to 'Parts', produceable_component.component, class: 'btn btn-default'
+            = link_to 'Value', edit_produceable_path(produceable_component.component_id), class: 'btn btn-success'
+            = link_to 'Qty', edit_produceable_component_path(produceable_component.id),  class: 'btn btn-primary'
+            = link_to 'Delete', produceable_component_path(produceable_component.id), method: :delete,  class: 'btn btn-danger'
   %tr
-    %td{colspan: 4}
+    %td.text-right{colspan: 4} Total:
     %td= number_to_currency produceable.cost

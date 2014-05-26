@@ -18,19 +18,10 @@ class BuildPlan < ActiveRecord::Base
   end
 
   def cost
-    planned_orderables = planned_items.get_orderables
-    inventoried_orderables = plan_inventory_items.get_orderables + planned_items.get_buildables
-
-    inventoried_orderables = inventoried_orderables.group_by(&:id).map do |id, orderables|
-      Orderable.new id, orderables.map(&:qty).reduce(&:+)
-    end.group_by(&:id)
-
-    planned_orderables.map do |orderable|
-      (orderable.cost || 0) - (inventoried_orderables[id].try(:first).try(:cost) || 0)
-    end.reduce(&:+)
+    planned_items.map(&:cost).reduce(0, &:+) - plan_inventory_items.map(&:cost).reduce(0, &:+)
   end
 
   def value
-    planned_items.map(&:value).reduce(0, &:+) + plan_inventory_items.map(&:value).reduce(0, &:+)
+    planned_items.map(&:value).reduce(0, &:+) - plan_inventory_items.map(&:value).reduce(0, &:+)
   end
 end

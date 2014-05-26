@@ -1,6 +1,8 @@
-%h2= @produceable.name
-= link_to "Edit", edit_produceable_path(@produceable)
-= link_to "Index", produceables_path
+%h2
+  = @produceable.name
+  .btn-group.pull-right
+    = link_to "Edit", edit_produceable_path(@produceable), class: 'btn btn-info'
+    = link_to "Index", produceables_path, class: 'btn btn-default'
 = render 'summary', produceable: @produceable
 = render 'edit_components', produceable: @produceable
 = render 'components', produceable: @produceable

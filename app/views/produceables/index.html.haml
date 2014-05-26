@@ -1,7 +1,8 @@
 %h2
   Produceables
   = link_to "Build Plans", build_plans_path
-%table
+%h3 Products
+%table.table.table-condensed.table-striped
   %tr
     %th
     %th Name
@@ -9,8 +10,6 @@
     %th Cost
     %th Number of Component
     %th
-  %tr
-    %th Products
 
   - @produceables.each do |produceable|
     -if produceable.has_components?
@@ -34,8 +33,15 @@
             N/A
         %td
           = link_to "Delete", produceable_path(produceable), method: :delete
+
+%h3 Components
+%table.table.table-condensed.table-striped
   %tr
-    %th Components
+    %th
+    %th Name
+    %th Value
+    %th
+
 
   - @produceables.each do |produceable|
     -if ! produceable.has_components?
@@ -45,15 +51,6 @@
         %td
           = link_to edit_produceable_path(produceable) do
             = number_to_currency produceable.value
-        %td
-          - if produceable.cost == 0
-
-          - else
-            = number_to_currency produceable.cost
-        %td
-          - if produceable.has_components?
-            = produceable.produceable_components.count
-          - else
 
         %td
           = link_to "Delete", produceable_path(produceable), method: :delete

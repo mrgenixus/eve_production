@@ -1,18 +1,18 @@
 
 
-= form_for [build_plan, build_plan.planned_items.build] do |f|
+= form_for [build_plan, build_plan.planned_items.build], html: { class: 'form-inline'} do |f|
   %h3 Plan Item
-  .product
+  .product.form-group
     = f.label :product
     = f.select :item_id, Produceable.all.map { |produceable| [ produceable.name, produceable.id] }
-  .qty
+  .qty.form-group
     = f.label :qty
     = f.number_field :qty
-  .submit
-    = f.submit
+  .submit.form-group
+    = f.submit class: 'btn btn-primary'
 
 
-%table
+%table.table.table-condensed.table-striped
   %tr
     %th qty
     %th Name
@@ -40,19 +40,19 @@
 
         %td= link_to 'Delete', planned_item_path(planned_item), method: :delete
 
-= form_for [build_plan, build_plan.plan_inventory_items.build] do |f|
+= form_for [build_plan, build_plan.plan_inventory_items.build], html: { class: 'form-inline'} do |f|
   %h3 Plan Inventory Item
-  .product
+  .product.form-group
     = f.label :product
     = f.select :item_id, Produceable.all.map { |produceable| [ produceable.name, produceable.id] }
-  .qty
+  .qty.form-group
     = f.label :qty
     = f.number_field :qty
-  .submit
-    = f.submit
+  .submit.form-group
+    = f.submit class: 'btn btn-primary'
 
 
-%table
+%table.table.table-condensed.table-striped
   %tr
     %th qty
     %th Name
@@ -82,12 +82,13 @@
         %td= link_to 'Delete', plan_inventory_item_path(plan_inventory_item), method: :delete
 
 %h3 Purchase Order
-%table
+%table.table.table-condensed.table-striped
   %tr
     %th Name
     %th Qty
     %th Cost
     %th Unit Price
+    %th
     %th
 
   - build_plan.purchase_order.each do |orderable|
@@ -97,9 +98,13 @@
       %td= number_to_currency orderable.cost
       %td
         = link_to edit_produceable_path(orderable.produceable) do
-          #{(orderable.produceable.value || orderable.produceable.cost)}ea.
+          = number_to_currency (orderable.produceable.value || orderable.produceable.cost)
 
       %td #{number_with_precision (orderable.cost / build_plan.cost) * 100, precision: 2}%
+      %td
+        - if orderable.produceable.has_components?
+          = link_to "Add To Plan", build_plan_planned_items_path(@build_plan, planned_item: {item_id: orderable.produceable.id, qty: orderable.qty}), method: :post
+        = link_to "Add To Inventory", build_plan_plan_inventory_items_path(@build_plan, plan_inventory_item: {item_id: orderable.produceable.id, qty: orderable.qty}), method: :post
   %tr
     %td{colspan: 2}
     %td= number_to_currency build_plan.cost

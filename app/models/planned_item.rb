@@ -16,18 +16,18 @@ class PlannedItem < Item
   end
 
   def self.get_buildables
-    preload(:product).map do |plan_inventory_item|
-      Orderable.new plan_inventory_item.product.id, plan_inventory_item.qty
+    preload(:product).map do |planned_item|
+      Orderable.new planned_item.product.id, planned_item.qty
     end.group_by(&:id).map do |id, orderables|
       Orderable.new id, orderables.map(&:qty).reduce(&:+)
     end
   end
 
   def cost
-    (product.cost * qty || 1)
+    ((product.try(:cost) || 0 ) *( qty || 1))
   end
 
   def value
-    (product.value * qty || 1)
+    ((product.try(:value) || 0) * (qty || 1))
   end
 end
