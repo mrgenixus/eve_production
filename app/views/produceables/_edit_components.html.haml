@@ -1,4 +1,4 @@
-= form_for [produceable, produceable.produceable_components.build] do |f|
+= form_for :produceable_component, url: produceable_produceable_components_path(produceable, produceable.produceable_components.build) do |f|
   %h3 Add Component
   %span.component
     = f.label :product

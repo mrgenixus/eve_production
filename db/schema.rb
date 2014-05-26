@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140526013903) do
+ActiveRecord::Schema.define(version: 20140526053051) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(version: 20140526013903) do
     t.float  "value"
     t.float  "blueprint_cost"
     t.string "deleted"
+    t.string "type"
   end
 
 end

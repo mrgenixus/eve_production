@@ -28,7 +28,7 @@
         %td= link_to planned_item.qty, edit_planned_item_path(planned_item)
         %td= link_to planned_item.product.name, edit_produceable_path(planned_item.product)
         %td
-          = link_to planned_item.product do
+          = link_to produceable_path(planned_item.product) do
             = number_to_currency planned_item.product.cost
 
         %td
@@ -65,11 +65,13 @@
   - build_plan.plan_inventory_items.each do |plan_inventory_item|
     - if plan_inventory_item.component
       %tr
-        %td= plan_inventory_item.qty
+        %td
+          = link_to edit_plan_inventory_item_path(plan_inventory_item) do
+            = plan_inventory_item.qty
         %td= link_to plan_inventory_item.component.name, edit_produceable_path(plan_inventory_item.component)
 
         %td
-          =link_to plan_inventory_item.component do
+          =link_to produceable_path(plan_inventory_item.component) do
             = number_to_currency plan_inventory_item.component.cost
 
         %td

@@ -1,60 +1,32 @@
 %h2
   Produceables
   = link_to "Build Plans", build_plans_path
-%h3 Products
-%table.table.table-condensed.table-striped
-  %tr
-    %th
-    %th Name
-    %th Value
-    %th Cost
-    %th Number of Component
-    %th
 
-  - @produceables.each do |produceable|
-    -if produceable.has_components?
+- @produceables.group_by(&:type).each do |type, produceables|
+  %h3= type
+  %table.table.table-condensed.table-striped
+    %tr
+      %th.col-md-3 Name
+      %th.col-md-2 Value
+      %th.col-md-2 Cost
+      %th.col-md-2 Number of Component
+      %th.col-md-3
+
+    - produceables.each do |produceable|
       %tr
-      %td
         %td= link_to produceable.name, produceable_path(produceable)
         %td
           = link_to edit_produceable_path(produceable) do
             = number_to_currency produceable.value
         %td
-          - if produceable.cost == 0
-            N/A
-          - else
-            = link_to produceable do
+          - if produceable.cost != 0
+            = link_to produceable_path(produceable) do
               = number_to_currency produceable.cost
         %td
           - if produceable.has_components?
-            = link_to produceable do
+            = link_to produceable_path(produceable) do
               = produceable.produceable_components.count
-          - else
-            N/A
-        %td
+        %td.text-right
           = link_to "Delete", produceable_path(produceable), method: :delete
-
-%h3 Components
-%table.table.table-condensed.table-striped
-  %tr
-    %th
-    %th Name
-    %th Value
-    %th
-
-
-  - @produceables.each do |produceable|
-    -if ! produceable.has_components?
-      %tr
-      %td
-        %td= link_to produceable.name, produceable_path(produceable)
-        %td
-          = link_to edit_produceable_path(produceable) do
-            = number_to_currency produceable.value
-
-        %td
-          = link_to "Delete", produceable_path(produceable), method: :delete
-  %tr
-    %td{colspan: 5}= paginate @produceables
-  %tr
-    %td{colspan: 5}= link_to "Add Produceable", new_produceable_path
+%tr
+  %td{colspan: 5}= link_to "Add Produceable", new_produceable_path

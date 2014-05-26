@@ -2,7 +2,7 @@ class ProduceablesController < ApplicationController
   before_filter :get_produceable, only: [:show, :edit, :update, :destroy]
 
   def index
-    @produceables = Produceable.page params[:page]
+    @produceables = Produceable.all
   end
 
   def new
@@ -21,7 +21,7 @@ class ProduceablesController < ApplicationController
 
   def update
     if @produceable.update_attributes produceable_params
-      redirect_to @produceable
+      redirect_to produceable_path(@produceable)
     else
       render :edit, errors: @produceable.errors.full_sentences
     end
@@ -42,6 +42,6 @@ class ProduceablesController < ApplicationController
   end
 
   def produceable_params
-    params.require(:produceable).permit(:name, :value, :blueprint_cost)
+    params.require(:produceable).permit(:name, :value, :blueprint_cost, :type)
   end
 end

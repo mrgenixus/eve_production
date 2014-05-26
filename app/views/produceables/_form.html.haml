@@ -1,4 +1,7 @@
-= form_for produceable do |f|
+= form_for :produceable, url: produceable_path(produceable), method: :patch do |f|
+  .type
+    = f.label :type
+    = f.select :type, ['Ship', 'Component', 'Mineral', ['Advanced Lunar Material', 'AdvancedLunarMaterial'], ['Planetary Materials', 'PlanetaryMaterials'], ['Other', 'Produceable']]
   .name
     = f.label :name
     = f.text_field :name

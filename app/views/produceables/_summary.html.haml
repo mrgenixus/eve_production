@@ -1,4 +1,8 @@
 %dl.dl-horizontal
+
+  %dt Type
+  %dd= produceable.type.try(:underscore).try(:titleize)
+
   %dt Name
   %dd= produceable.name
 
