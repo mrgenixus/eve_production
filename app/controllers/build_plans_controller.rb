@@ -4,6 +4,10 @@ class BuildPlansController < ApplicationController
     @build_plans = BuildPlan.page params[:page]
   end
 
+  def edit
+    render :show
+  end
+
   def new
     redirect_to edit_build_plan_path(BuildPlan.create)
   end
