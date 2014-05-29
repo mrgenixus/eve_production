@@ -8,15 +8,13 @@
     %th Aggregate Projected Value
     %th.text-right Actions
 
-  - produceable.produceable_components.each do |produceable_component|
+  - produceable.produceable_components.preload(:component).each do |produceable_component|
     - if produceable_component.component
       %tr
         %td= link_to produceable_component.qty, edit_produceable_component_path(produceable_component.id)
         %td= link_to produceable_component.component.name, edit_produceable_path(produceable_component.component)
         %td
-          - if produceable_component.component.cost == 0
-            N/A
-          - else
+          - if produceable_component.component.cost != 0
             = link_to produceable_path(produceable_component.component) do
               = number_to_currency produceable_component.component.cost
         %td

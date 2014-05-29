@@ -5,29 +5,23 @@ class PlannedItem < Item
   validates :product, presence: true
   validates :build_plan, presence: true
 
-  def self.get_orderables
-    preload(:product).flat_map do |planned_item|
-      planned_item.product.purchase_report.map do |orderable|
-        Orderable.new orderable.id, orderable.qty * (planned_item.qty || 1)
-      end
-    end.group_by(&:id).map do |id, orderables|
-      Orderable.new id, orderables.map(&:qty).reduce(&:+)
-    end
-  end
-
-  def self.get_buildables
-    preload(:product).map do |planned_item|
-      Orderable.new planned_item.product.id, planned_item.qty
-    end.group_by(&:id).map do |id, orderables|
-      Orderable.new id, orderables.map(&:qty).reduce(&:+)
-    end
-  end
-
   def cost
-    ((product.try(:cost) || 0 ) *( qty || 1))
+    @cost ||= ((product.try(:cost) || 0 ) * (qty || 1))
   end
 
   def value
-    ((product.try(:value) || 0) * (qty || 1))
+    @value ||= ((product.try(:value) || 0) * (qty || 1))
+  end
+
+  def self.cost
+    to_orderables_collection.cost
+  end
+
+  def self.value
+    to_orderables_collection.value
+  end
+
+  def self.sub_components
+    to_orderables_collection.sub_components
   end
 end

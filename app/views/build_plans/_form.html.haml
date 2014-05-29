@@ -22,7 +22,7 @@
     %th Aggregate Projected Value
     %th
 
-  - build_plan.planned_items.each do |planned_item|
+  - build_plan.planned_items.preload(:product).each do |planned_item|
     - if planned_item.product
       %tr
         %td= link_to planned_item.qty, edit_planned_item_path(planned_item)
@@ -89,6 +89,7 @@
     %th Name
     %th Qty
     %th Cost
+    %th Agg. Value
     %th Unit Price
     %th
     %th
@@ -98,6 +99,15 @@
       %td= orderable.produceable.name
       %td= number_with_delimiter orderable.qty
       %td= number_to_currency orderable.cost
+      %td
+        #{number_to_currency orderable.value}
+        - if orderable.value > orderable.cost
+          %span.text-danger
+            = number_to_currency orderable.value - orderable.cost
+        - elsif orderable.value < orderable.cost
+          %span.text-success
+            = number_to_currency orderable.cost - orderable.value
+
       %td
         = link_to edit_produceable_path(orderable.produceable) do
           = number_to_currency (orderable.produceable.value || orderable.produceable.cost)
@@ -109,5 +119,5 @@
         = link_to "Add To Inventory", build_plan_plan_inventory_items_path(@build_plan, plan_inventory_item: {item_id: orderable.produceable.id, qty: orderable.qty}), method: :post
   %tr
     %td{colspan: 2}
-    %td= number_to_currency build_plan.cost
+    %td= number_to_currency build_plan.purchase_order.cost
 

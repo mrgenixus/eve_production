@@ -15,6 +15,6 @@ class BuildPlansController < ApplicationController
   private
 
   def get_build_plan
-    @build_plan = BuildPlan.find(params.require(:id))
+    @build_plan = BuildPlan.find(params.require(:id), include: { planned_items: :product, plan_inventory_items: :component})
   end
 end
