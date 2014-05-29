@@ -34,8 +34,14 @@ group :doc do
 end
 
 group :test, :development do
+  gem 'pry'
   gem 'better_errors'
   gem 'binding_of_caller'
+
+  gem 'rspec-rails'
+  gem 'factory_girl_rails'
+  gem 'bullet'
+  gem 'sql-logging'
 end
 
 # Use ActiveModel has_secure_password
