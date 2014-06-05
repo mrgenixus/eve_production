@@ -29,7 +29,7 @@
         %td= link_to planned_item.product.name, edit_produceable_path(planned_item.product)
         %td
           = link_to produceable_path(planned_item.product) do
-            = number_to_currency planned_item.product.cost
+            = number_to_currency planned_item.product_cost
 
         %td
           = link_to edit_produceable_path(planned_item.product) do

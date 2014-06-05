@@ -31,11 +31,21 @@ class OrderablesCollection
   end
 
   def cost
-    @cost ||= map(&:cost).compact.reduce(0, &:+)
+    final_component_qty.value
   end
 
   def value
-    @value ||+ map(&:value).compact.reduce(0, &:+)
+    Produceable.where(id: @members.map(&:item_id)).pluck(:value).reduce(0, &:+)
+  end
+
+  def final_component_qty
+    OrderablesCollection.new *sub_components.flat_map do |sub_component|
+      if sub_component.final_component_qty.count > 0
+        sub_component.final_component_qty * sub_component.qty
+      else
+        [sub_component]
+      end
+    end
   end
 
   def reduce_from_inventory(orderables_collection)
@@ -71,5 +81,9 @@ class OrderablesCollection
     end
 
     OrderablesCollection.new *members
+  end
+
+  def items
+    Produceable.where(id: @members.map(&:item_id))
   end
 end

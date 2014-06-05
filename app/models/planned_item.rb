@@ -13,6 +13,10 @@ class PlannedItem < Item
     @value ||= ((product.try(:value) || 0) * (qty || 1))
   end
 
+  def product_cost
+    Produceable.cost(item_id)
+  end
+
   def self.cost
     to_orderables_collection.cost
   end
@@ -23,5 +27,9 @@ class PlannedItem < Item
 
   def self.sub_components
     to_orderables_collection.sub_components
+  end
+
+  def self.items
+    to_orderables_collection.items
   end
 end

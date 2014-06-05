@@ -1,5 +1,8 @@
 class Produceable < ActiveRecord::Base
   has_many :produceable_components, foreign_key: :product_id
+  has_many :components, through: :produceable_components
+
+  @@costs = Hash.new
 
   def cost
     return @cost unless @cost.nil?
@@ -22,10 +25,14 @@ class Produceable < ActiveRecord::Base
     id
   end
 
+  def self.cost(id)
+    @@costs[id] ||= self.find(id).cost
+  end
+
   private
 
   def calculated_cost
-    @cost ||= produceable_components.preload(:component).map(&:cost).reduce(0, &:+)
+    @cost ||= components.map(&:cost).reduce(0, &:+)
   end
 
 end
