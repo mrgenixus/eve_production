@@ -1,0 +1,59 @@
+table
+  tr
+    th Name
+    th Price
+    th Actions
+  - @items.each do |item|
+    = cache item
+      tr[data-id = item.id]
+        td= link_to item.name, item
+        td.price.uk-width-1-10= number_to_currency item.price || 0.00
+        td
+          = link_to item, method: :delete, class: 'uk-button uk-button-danger', title: 'Delete'
+            i.uk-icon-trash
+
+          = link_to item_path(item, {item: { price: (item.price || 0) + 1}, format: :js}), method: :patch, class: 'uk-button uk-button-warning', title: 'Update Price', remote: true
+            i.uk-icon-dollar
+
+javascript:
+  $(function(){
+    $('[data-remote]').on('ajax:success', function(data) {
+      console.log(data);
+      document.location.reload();
+    });
+  });
+
+  function update_price(e) {
+    var $this = $(this);
+    var value = 0, $input;
+
+    if($this.is('input')) {
+      value = $this.val();
+      $this = $this.parent();
+      var id = $this.closest('[data-id]').data('id');
+      $this.html('$' + parseFloat(value).toFixed(2));
+      $.ajax({
+        method: "POST",
+        data: {
+          item: {
+            price: value
+          },
+          _method: 'patch'
+        },
+        url: '/items/' + id,
+        dataType: 'json',
+        success: function() {
+          $this.closest('tr').next().find('.price').click()
+        }
+      });
+    } else {
+      value = $this.text().replace(/[^\d\.]/g, '');
+      $input = $('<input type="text" class="uk-width-1-1">').val(value);
+      $this.html($input);
+      $input.select();
+    }
+  }
+
+  $(document).on('click', '.price', update_price)
+  $(document).on('blur', '.price input', update_price)
+

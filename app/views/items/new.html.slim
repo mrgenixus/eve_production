@@ -1,0 +1,7 @@
+= form_for @item, html: { class: 'uk-form-horizontal' } do |f|
+  .uk-form-row
+    = f.label :name, class: 'uk-form-label'
+    .uk-form-controls
+      = f.text_field :name, placeholder: "Tritanium"
+
+  = f.submit

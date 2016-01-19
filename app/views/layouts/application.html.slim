@@ -1,0 +1,31 @@
+doctype html
+html
+  head
+    meta content=("text/html; charset=UTF-8") http-equiv="Content-Type" /
+    title EveBuild
+    = stylesheet_link_tag    'application', media: 'all'
+    = javascript_include_tag 'application'
+    = csrf_meta_tags
+  body
+    #offcanvas-1.uk-offcanvas aria-hidden="true"
+      .uk-offcanvas-bar
+        ul.uk-nav.uk-nav-offcanvas.uk-nav-parent-icon data-uk-nav=""
+          li
+            = link_to "Items", :items
+
+    = content_for :header
+
+    nav.uk-navbar
+      ul.uk-navbar-nav
+        li
+          a.uk-button data-uk-offcanvas="{target:'#offcanvas-1'}"
+            i.uk-icon-navicon
+        = content_for :navbar
+
+    - flash.each do |key, value|
+      div class=("uk-alert alert-#{key}")
+        a.uk-alert-close.uk-close href=""
+        = value
+
+
+    = content_for?(:content) ? yield(:content) : yield

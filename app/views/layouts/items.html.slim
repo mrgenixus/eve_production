@@ -1,0 +1,15 @@
+= content_for :navbar
+  li= link_to [:new, :item], class: 'uk-button'
+    .uk-icon-plus
+    | Add Item
+  li= link_to :items, class: 'uk-button'
+    .uk-icon-list
+    | All Items
+
+= content_for :content
+  = yield
+
+= content_for :header
+  h1 Items
+
+= render template: "layouts/application"
