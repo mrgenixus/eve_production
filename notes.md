@@ -7,3 +7,7 @@
   * the qty of the material
       * (minus material on_hand) times one of the above plus
       * unit_value of material on_hand
+
+## Dev Notes
+### Backend
+- using UUID PK's http://labria.github.io/2013/04/28/rails-4-postgres-uuid-pk-guide/
