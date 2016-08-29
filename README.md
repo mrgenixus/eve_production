@@ -15,6 +15,11 @@ Some might say I lack the programming language to describe it.  ... I think its 
   ```
   npm install
   ```
+  
+## Running
+```
+npm start
+```
 
 ## Tests
 
