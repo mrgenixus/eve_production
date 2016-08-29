@@ -11,3 +11,6 @@
 ## Dev Notes
 ### Backend
 - using UUID PK's http://labria.github.io/2013/04/28/rails-4-postgres-uuid-pk-guide/
+
+### Redux
+- Reselectors: http://redux.js.org/docs/recipes/ComputingDerivedData.html
